@@ -1,13 +1,11 @@
 package com.wefox.paymentverification.service.online;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wefox.paymentverification.model.AccountModel;
 import com.wefox.paymentverification.model.PaymentModel;
 import com.wefox.paymentverification.repository.AccountRepository;
 import com.wefox.paymentverification.repository.PaymentRepository;
 import com.wefox.paymentverification.service.PaymentModelMapper;
-import com.wefox.paymentverification.service.domain.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -34,21 +32,22 @@ public class OnlinePaymentServiceImpl implements OnlinePaymentService {
 
     @Override
     @KafkaListener(topics = ONLINE_TOPIC, groupId = GROUP_ID)
-    public void savePayment(String message) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        Payment payment = mapper.readValue(message, Payment.class);
+    public void processOnlinePayment(String message) throws JsonProcessingException {
+        PaymentModel paymentModel = paymentModelMapper.mapPaymentToPaymentModel(message);
 
-        PaymentModel paymentModel = paymentModelMapper.mapPaymentToPaymentModel(payment);
+        if (isPaymentValid()) {
+            paymentRepository.save(paymentModel);
 
-        isPaymentValid();
-
-        paymentRepository.save(paymentModel);
-
-        updateAccount(paymentModel);
+            updateAccount(paymentModel);
+        } else {
+            // error log
+        }
     }
 
-    private void isPaymentValid() {
+    private boolean isPaymentValid() {
 
+
+        return false;
     }
 
     private void updateAccount(PaymentModel paymentModel) {

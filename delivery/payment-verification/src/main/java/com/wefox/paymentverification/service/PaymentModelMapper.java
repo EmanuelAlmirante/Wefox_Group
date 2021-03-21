@@ -1,5 +1,7 @@
 package com.wefox.paymentverification.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wefox.paymentverification.model.AccountModel;
 import com.wefox.paymentverification.model.PaymentModel;
 import com.wefox.paymentverification.repository.AccountRepository;
@@ -18,7 +20,9 @@ public class PaymentModelMapper {
         this.accountRepository = accountRepository;
     }
 
-    public PaymentModel mapPaymentToPaymentModel(Payment payment) {
+    public PaymentModel mapPaymentToPaymentModel(String message) throws JsonProcessingException {
+        Payment payment = mapMessageToPayment(message);
+
         PaymentModel paymentModel = new PaymentModel();
 
         paymentModel.setAccountModel(getAccountModel(payment));
@@ -27,6 +31,13 @@ public class PaymentModelMapper {
         paymentModel.setAmount(Integer.parseInt(payment.getAmount()));
 
         return paymentModel;
+    }
+
+    private Payment mapMessageToPayment(String message) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        Payment payment = mapper.readValue(message, Payment.class);
+
+        return payment;
     }
 
     private AccountModel getAccountModel(Payment payment) {
