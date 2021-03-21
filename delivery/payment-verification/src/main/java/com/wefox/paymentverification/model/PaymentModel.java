@@ -31,5 +31,5 @@ public class PaymentModel {
     private String creditCard;
     private Integer amount;
     @CreationTimestamp
-    private Date createdDate;
+    private Date createdOn;
 }

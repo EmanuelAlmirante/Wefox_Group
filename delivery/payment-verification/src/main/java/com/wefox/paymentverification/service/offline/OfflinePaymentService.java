@@ -1,7 +1,7 @@
 package com.wefox.paymentverification.service.offline;
 
-import com.wefox.paymentverification.model.PaymentModel;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface OfflinePaymentService {
-    void savePayment(PaymentModel paymentModel);
+    void savePayment(String message) throws JsonProcessingException;
 }

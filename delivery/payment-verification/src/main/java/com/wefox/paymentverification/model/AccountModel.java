@@ -17,7 +17,7 @@ import java.util.Date;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "account")
+@Table(name = "accounts")
 public class AccountModel {
     @Id
     @GeneratedValue
@@ -26,5 +26,5 @@ public class AccountModel {
     private Date birthdate;
     private String lastPaymentDate;
     @CreationTimestamp
-    private Date createdDate;
+    private Date createdOn;
 }
