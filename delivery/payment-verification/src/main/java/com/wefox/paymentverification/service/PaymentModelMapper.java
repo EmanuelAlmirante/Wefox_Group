@@ -4,8 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wefox.paymentverification.model.AccountModel;
 import com.wefox.paymentverification.model.PaymentModel;
+import com.wefox.paymentverification.model.utils.PaymentEnum;
 import com.wefox.paymentverification.repository.AccountRepository;
-import com.wefox.paymentverification.service.domain.Payment;
+import com.wefox.paymentverification.service.domain.PaymentJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,28 +22,31 @@ public class PaymentModelMapper {
     }
 
     public PaymentModel mapPaymentToPaymentModel(String message) throws JsonProcessingException {
-        Payment payment = mapMessageToPayment(message);
+        PaymentJson paymentJson = mapMessageToPayment(message);
 
         PaymentModel paymentModel = new PaymentModel();
 
-        paymentModel.setAccountModel(getAccountModel(payment));
-        paymentModel.setPaymentType(payment.getPaymentType());
-        paymentModel.setCreditCard(payment.getCreditCard());
-        paymentModel.setAmount(Integer.parseInt(payment.getAmount()));
+        paymentModel.setAccountModel(getAccountModel(paymentJson));
+        paymentModel.setPaymentType(paymentJson.getPaymentType());
+        paymentModel.setCreditCard(paymentJson.getCreditCard());
+        paymentModel.setAmount(Integer.parseInt(paymentJson.getAmount()));
 
         return paymentModel;
     }
 
-    private Payment mapMessageToPayment(String message) throws JsonProcessingException {
+    private PaymentJson mapMessageToPayment(String message) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        Payment payment = mapper.readValue(message, Payment.class);
 
-        return payment;
+        return mapper.readValue(message, PaymentJson.class);
     }
 
-    private AccountModel getAccountModel(Payment payment) {
-        Optional<AccountModel> accountModel = accountRepository.findById(Integer.parseInt(payment.getAccountId()));
+    private AccountModel getAccountModel(PaymentJson paymentJson) {
+        if (paymentJson.getPaymentType().equals(PaymentEnum.OFFLINE.getPaymentType())) {
+            return null;
+        } else {
+            Optional<AccountModel> accountModel = accountRepository.findById(Integer.parseInt(paymentJson.getAccountId()));
 
-        return accountModel.orElse(null);
+            return accountModel.orElse(null);
+        }
     }
 }

@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Payment {
+public class PaymentJson {
     @JsonProperty(value = "payment_id")
     private String paymentId;
     @JsonProperty(value = "account_id")
