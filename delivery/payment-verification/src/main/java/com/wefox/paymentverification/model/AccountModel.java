@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
@@ -20,11 +18,9 @@ import java.util.Date;
 @Table(name = "accounts")
 public class AccountModel {
     @Id
-    @GeneratedValue
     private Integer accountId;
     private String email;
     private Date birthdate;
-    private String lastPaymentDate;
-    @CreationTimestamp
+    private Date lastPaymentDate;
     private Date createdOn;
 }

@@ -1,4 +1,4 @@
-package com.wefox.paymentverification.service.offline;
+package com.wefox.paymentverification.service.payment.offline;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 

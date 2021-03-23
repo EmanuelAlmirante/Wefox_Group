@@ -1,4 +1,4 @@
-package com.wefox.paymentverification.model.utils;
+package com.wefox.paymentverification.service.utils.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -22,7 +20,6 @@ import java.util.Date;
 @Table(name = "payments")
 public class PaymentModel {
     @Id
-    @GeneratedValue
     private String paymentId;
     @OneToOne
     @JoinColumn(name = "accountId")
@@ -30,6 +27,5 @@ public class PaymentModel {
     private String paymentType;
     private String creditCard;
     private Integer amount;
-    @CreationTimestamp
     private Date createdOn;
 }
