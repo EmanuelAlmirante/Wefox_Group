@@ -2,7 +2,7 @@
 
 ## :computer: How to execute
 
-To execute the solution it is only necessary to execute _mvn clean install_ and _mvn spring-boot:run_ in the folder _payment-verification_. Keep in mind that this should only be done after starting the 
+To execute the solution it is only necessary to execute _mvn clean install_ and _mvn spring-boot:run_ in the folder _payment-verification_. Keep in mind that this should only be done after starting the docker-compose.yml.
 
 ## :memo: Notes
 
