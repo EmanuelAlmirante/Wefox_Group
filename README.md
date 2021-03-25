@@ -16,7 +16,9 @@ About the logging of errors, I was not completely aware of what was expected fro
 
 ## :pushpin: Things to improve
 
-The first thing to improve would be test coverage by adding integration tests. Unit tests are better than nothing, but the coverage they provide is not total. 
+The first thing to improve would be test coverage by adding integration tests. Unit tests are a bit poor (only two of them, one for each service), especially because they only adress the good situations, so to say. 
+
+There is some repeated code between the services and also in the unit tests that should be extracted to a common class and avoid having it multiplied in all services and tests.
 
 Adding a Dockerfile and a docker-compose.yml would be the next improvement. This is an indispensable feature nowadays considering that everything is run in a cloud provider. 
 
